@@ -1,5 +1,6 @@
-function plus(a, b) {
-  return a + b;
-}
-const result = plus(1, 2);
-console.log(result);
+const { plus, minus } = require("./calc");
+
+const resultPlus = plus(1, 2);
+const resultMinus = minus(1, 2);
+console.log(resultPlus);
+console.log(resultMinus);
