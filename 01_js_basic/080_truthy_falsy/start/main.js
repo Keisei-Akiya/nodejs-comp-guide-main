@@ -21,15 +21,18 @@ console.log(Boolean(truthy));
 console.log(Boolean(falsy));
 
 // 論理積 (&&) について
+// falsyが見つかったら返却．
+// 見つからなければ最後を返却
 const resultA = "" && "foo";
 const resultB = 2 && 1 && 0 && 3;
 const resultC = "foo" && 4;
 
-// console.log(resultA);
-// console.log(resultB);
-// console.log(resultC);
+console.log(resultA);
+console.log(resultB);
+console.log(resultC);
 
 // 理論和 (||) について
+// truthyが見つかったら返却
 const resultD = "" || "foo";
 const resultE = 0 || 2 || 0;
 const resultF = "foo" || 4;
