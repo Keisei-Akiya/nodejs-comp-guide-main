@@ -11,11 +11,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "description": "",
   "dependencies": {
     "is-odd": "^3.0.1"
   },
   "devDependencies": {
     "live-server": "^1.2.2"
-  },
-  "description": ""
+  }
 }
