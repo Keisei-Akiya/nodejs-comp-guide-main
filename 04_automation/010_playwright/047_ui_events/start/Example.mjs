@@ -8,12 +8,19 @@ import { chromium } from "@playwright/test";
   const page = await browser.newPage();
   await page.goto("http://localhost:3000");
 
+  await page.waitForTimeout(2000);
+
+  const inputLocator = page.locator('//*[@id="__next"]/div/div[1]/label/input');
+  await inputLocator.type("美");
+
+  const pager3Locator = page.locator(".page-link.page-number >> nth=-1");
+  await pager3Locator.click();
+
   // CSS セレクターで要素を取得
-  const pageTitleLocator = await page.locator(".cards.list-group-item");
-  const parentLocator = await pageTitleLocator.locator('..')
-  const pageTitle = await parentLocator.innerHTML();
-  console.log(pageTitle);
+  const cardLocator = await page.locator(".cards.list-group-item");
 
-  await browser.close();
+  const cardCoutn = await cardLocator.count();
+  console.log(cardCoutn);
 
+  // await browser.close();
 })();
