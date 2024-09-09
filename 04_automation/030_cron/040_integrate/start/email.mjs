@@ -2,12 +2,12 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 dotenv.config();
 
-(async () => {
+async function sendEmail(subject, text) {
   const message = {
     from: process.env.EMAIL_FROM,
     to: process.env.EMAIL_TO,
-    subject: "メールの件名です",
-    text: `あいうえお \n改行`,
+    subject,
+    text,
   };
 
   const smtpConfig = {
@@ -16,7 +16,7 @@ dotenv.config();
     secure: true, // SSL
     auth: {
       user: process.env.EMAIL_FROM,
-      //googleアカウントのアプリパスワードを設定
+      // googleアカウントのアプリパスワードを設定
       // see https://support.google.com/accounts/answer/185833?hl=ja
       pass: process.env.APP_PASS,
     },
@@ -27,4 +27,6 @@ dotenv.config();
   transporter.sendMail(message, function (err, response) {
     console.log(err || response);
   });
-})();
+}
+
+export { sendEmail };

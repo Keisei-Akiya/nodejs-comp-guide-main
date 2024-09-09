@@ -1,9 +1,9 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import env from 'dotenv';
+import { GoogleSpreadsheet } from "google-spreadsheet";
+import env from "dotenv";
 env.config();
-import { createRequire } from 'module';
+import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const secrets = require('../../../google_secrets.json');
+const secrets = require("../../../../google_secrets.json");
 
 /**
  * 問題：
@@ -25,4 +25,23 @@ const secrets = require('../../../google_secrets.json');
 
   await doc.loadInfo();
 
+  const cartSheet = doc.sheetsByTitle["cart"];
+  const row = cartSheet.addRows([
+    {
+      name: "Orange",
+      price: 120,
+    },
+    {
+      name: "Banana",
+      price: 50,
+    },
+    {
+      name: "Apple",
+      price: 100,
+    },
+    {
+      name: "合計",
+      price: "=sum(B2:B4)",
+    },
+  ]);
 })();

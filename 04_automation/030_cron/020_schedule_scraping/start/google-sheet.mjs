@@ -4,8 +4,9 @@ env.config();
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const secrets = require("../../../../google_secrets.json");
+import { getEmployeesByScraping } from "./scraping.mjs";
 
-(async () => {
+async function addEmployeesToGS() {
   const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 
   await doc.useServiceAccountAuth({
@@ -15,8 +16,13 @@ const secrets = require("../../../../google_secrets.json");
 
   await doc.loadInfo();
 
-  const personSheet = doc.sheetsByTitle["persons"];
-  const rows = await personSheet.getRows();
+  const employees = await getEmployeesByScraping();
 
-  rows[0].delete();
-})();
+  const sheet = doc.sheetsByTitle["scraping"];
+
+  const rows = await sheet.addRows(employees);
+
+  rows.forEach((row) => row.save());
+}
+
+export { addEmployeesToGS };

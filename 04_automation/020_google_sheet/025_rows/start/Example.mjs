@@ -33,6 +33,4 @@ const secrets = require("../..//../../google_secrets.json");
       gender: "M",
     },
   ]);
-
-  row.save();
 })();
