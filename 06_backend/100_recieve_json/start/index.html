@@ -1,0 +1,29 @@
+<form action="/result" method="POST">
+  <input type="text" name="title" />
+  <input type="text" name="description" />
+  <input type="submit" />
+</form>
+<script>
+  const formEl = document.querySelector("form");
+  formEl.onsubmit = function (event) {
+    event.preventDefault();
+    const title = formEl[0].value;
+    const desc = formEl[1].value;
+
+    const data = {
+      title,
+      desc,
+    };
+
+    fetch("/result", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then(async function (res) {
+      const data = await res.json();
+      return;
+    });
+  };
+</script>
