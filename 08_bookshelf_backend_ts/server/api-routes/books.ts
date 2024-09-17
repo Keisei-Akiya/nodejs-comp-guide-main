@@ -1,17 +1,17 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import Book from "../models/book.mjs";
-import { registerBook } from "../controllers/books.mjs";
+import Book from "../models/book";
+import { registerBook } from "../controllers/books";
 
 const router = express.Router();
 
 // /api/books
-router.get("/", async function (req, res) {
+router.get("/", async (req: Request, res: Response) => {
   const books = await Book.find().sort({ updatedAt: -1 });
   res.json(books);
 });
 
-router.get("/:id", async function (req, res) {
+router.get("/:id", async (req: Request, res: Response) => {
   const _id = req.params.id;
   const book = await Book.findById(_id);
   res.json(book);
@@ -26,10 +26,15 @@ router.post(
   registerBook
 );
 
-router.patch("/:id", async function (req, res) {
+router.patch("/:id", async (req: Request, res: Response) => {
   const { title, description, comment, rating } = req.body;
   const _id = req.params.id;
   const book = await Book.findById(_id);
+
+  if (book === null) {
+    return res.status(404).json({ msg: "Book not found." });
+  }
+
   if (title !== undefined) book.title = title;
   if (description !== undefined) book.description = description;
   if (comment !== undefined) book.comment = comment;
@@ -38,7 +43,7 @@ router.patch("/:id", async function (req, res) {
   res.json(book);
 });
 
-router.delete("/:id", async function (req, res) {
+router.delete("/:id", async (req: Request, res: Response) => {
   const _id = req.params.id;
   const books = await Book.deleteOne({ _id });
   res.json({ msg: "Delete succeeded." });

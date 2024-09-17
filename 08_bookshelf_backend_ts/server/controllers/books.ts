@@ -1,7 +1,8 @@
+import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import Book from "../models/book.mjs";
+import Book from "../models/book";
 
-async function registerBook(req, res) {
+const registerBook = async (req: Request, res: Response) => {
   const errors = validationResult(req);
 
   // エラーの場合
