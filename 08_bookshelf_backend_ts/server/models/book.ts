@@ -10,10 +10,10 @@ const bookSchema = new Schema(
       type: Number,
       enum: [1, 2, 3, 4, 5],
       required: true,
-      get: function (val) {
+      get: function (val: number) {
         return Math.round(val);
       },
-      set: function (val) {
+      set: function (val: number) {
         return Math.round(val);
       },
     },
