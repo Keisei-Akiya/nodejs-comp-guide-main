@@ -1,21 +1,13 @@
 import express from "express";
-import { body, validationResult } from "express-validator";
-import Book from "../models/book.mjs";
-import { registerBook } from "../controllers/books.mjs";
+import { body } from "express-validator";
+import { deleteBook, getAllBooks, getBookById, registerBook, updateBook } from "../controllers/books.mjs";
 
 const router = express.Router();
 
 // /api/books
-router.get("/", async function (req, res) {
-  const books = await Book.find().sort({ updatedAt: -1 });
-  res.json(books);
-});
+router.get("/", getAllBooks);
 
-router.get("/:id", async function (req, res) {
-  const _id = req.params.id;
-  const book = await Book.findById(_id);
-  res.json(book);
-});
+router.get("/:id", getBookById);
 
 router.post(
   "/",
@@ -26,22 +18,15 @@ router.post(
   registerBook
 );
 
-router.patch("/:id", async function (req, res) {
-  const { title, description, comment, rating } = req.body;
-  const _id = req.params.id;
-  const book = await Book.findById(_id);
-  if (title !== undefined) book.title = title;
-  if (description !== undefined) book.description = description;
-  if (comment !== undefined) book.comment = comment;
-  if (rating !== undefined) book.rating = rating;
-  await book.save();
-  res.json(book);
-});
+router.patch(
+  "/:id",
+  body("title").optional().notEmpty(),
+  body("description").optional().notEmpty(),
+  body("comment").optional().notEmpty(),
+  body("rating").optional().notEmpty().isInt({ min: 1, max: 5 }),
+  updateBook
+);
 
-router.delete("/:id", async function (req, res) {
-  const _id = req.params.id;
-  const books = await Book.deleteOne({ _id });
-  res.json({ msg: "Delete succeeded." });
-});
+router.delete("/:id", deleteBook);
 
 export default router;

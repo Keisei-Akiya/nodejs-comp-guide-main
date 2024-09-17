@@ -2,7 +2,7 @@ GET http://localhost:8080/api/books
 
 ###
 
-GET http://localhost:8080/api/books/633471d481d8ae4ba04fbca9
+GET http://localhost:8080/a
 
 ###
 POST http://localhost:8080/api/books
@@ -17,13 +17,13 @@ Content-Type: application/json
 
 ###
 
-PATCH http://localhost:8080/api/books/633471d481d8ae4ba04fbca9
+PATCH http://localhost:8080/api/books/633471d481d8ae4ba04fbca8
 Content-Type: application/json
 
 {
-    "rating": 3
+    "rating": 5
 }
 
 ###
 
-DELETE http://localhost:8080/api/books/6334634881d8ae4ba04fbc8e
+DELETE http://localhost:8080/api/books/6
